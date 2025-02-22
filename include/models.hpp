@@ -5,13 +5,10 @@
 #include <string>
 
 struct User {
-    std::string name;
-    std::string email;
-    std::string password;
+    int m_id;
+    std::string m_name;
+    std::string m_email;
+    std::string m_password;
 
-    void Map(sqlite3_stmt* stmt) {
-        name = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 0));
-        email = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 1));
-        password = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 2));
-    }
+    void Map(sqlite3_stmt* stmt);
 };

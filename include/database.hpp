@@ -17,7 +17,7 @@ class Database {
     void ApplyMigrations(const std::string& folder = "./migrations");
 
     void CreateUser(const User& user);
-		void GetUserByEmail(const std::string& email);
+    void GetUserByEmail(const std::string& email);
 
     ~Database() noexcept;
 };
