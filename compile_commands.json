@@ -1,0 +1,30 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/c++",
+      "-I/home/zakariyya/Programming/pantheon/include",
+      "-std=gnu++17",
+      "-c",
+      "-o",
+      "CMakeFiles/pantheon.dir/src/main.cc.o",
+      "/home/zakariyya/Programming/pantheon/src/main.cc"
+    ],
+    "directory": "/home/zakariyya/Programming/pantheon/build",
+    "file": "/home/zakariyya/Programming/pantheon/src/main.cc",
+    "output": "/home/zakariyya/Programming/pantheon/build/CMakeFiles/pantheon.dir/src/main.cc.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/c++",
+      "-I/home/zakariyya/Programming/pantheon/include",
+      "-std=gnu++17",
+      "-c",
+      "-o",
+      "CMakeFiles/pantheon.dir/src/database.cc.o",
+      "/home/zakariyya/Programming/pantheon/src/database.cc"
+    ],
+    "directory": "/home/zakariyya/Programming/pantheon/build",
+    "file": "/home/zakariyya/Programming/pantheon/src/database.cc",
+    "output": "/home/zakariyya/Programming/pantheon/build/CMakeFiles/pantheon.dir/src/database.cc.o"
+  }
+]
