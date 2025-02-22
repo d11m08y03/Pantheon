@@ -7,6 +7,7 @@
 #include <stdexcept>
 #include <string>
 
+#include "bcrypt.h"
 #include "models.hpp"
 #include "statement.hpp"
 
@@ -81,7 +82,11 @@ void Database::CreateUser(const User& user) {
             m_db,
             "INSERT INTO TblUser (Name, Email, Password) VALUES (?, ?, ?)"
         );
-        stmt.BindParameters(m_db, user.name, user.email, user.password);
+
+        std::string hash = bcrypt::generateHash(user.m_password);
+        std::cout << hash << std::endl;
+
+        stmt.BindParameters(m_db, user.m_name, user.m_email, hash);
         stmt.ExecuteInsert(m_db);
     } catch (std::exception& e) {
         std::cout << e.what() << std::endl;
@@ -95,7 +100,7 @@ void Database::GetUserByEmail(const std::string& email) {
         auto user = stmt.ExecuteGet<User>(m_db);
 
         if (user) {
-            std::cout << user->email << std::endl;
+            std::cout << "User found: " << user->m_name << std::endl;
         } else {
             std::cout << "User not found" << std::endl;
         }

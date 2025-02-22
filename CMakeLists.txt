@@ -11,6 +11,7 @@ set(
     src/main.cc
     src/database.cc
     src/statement.cc
+		src/models.cc
 )
 
 find_package(SQLite3 QUIET)
@@ -30,8 +31,34 @@ if (NOT SQLite3_FOUND)
 
     include_directories(${sqlite3_SOURCE_DIR})
     link_directories(${sqlite3_BINARY_DIR})
+else()
+		message(STATUS "SQLite3 found.")
+endif()
+
+find_library(BCRYPT_LIBRARY bcrypt)
+
+if (BCRYPT_LIBRARY)
+    message(STATUS "bcrypt found.")
+else()
+    message(STATUS "bcrypt not found, fetching and building bcrypt-cpp...")
+
+    include(FetchContent)
+
+    FetchContent_Declare(
+        bcrypt-cpp
+        GIT_REPOSITORY https://github.com/hilch/Bcrypt.cpp.git
+        GIT_TAG V2.0_NODEBCRYPT 
+				GIT_SHALLOW TRUE
+    )
+
+    FetchContent_MakeAvailable(bcrypt-cpp)
+
+		include_directories(${bcrypt-cpp_INCLUDE_DIR})
+    link_directories(${bcrypt-cpp_BINARY_DIR})
+
+    set(BCRYPT_LIBRARY bcrypt)
 endif()
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 
-target_link_libraries(${PROJECT_NAME} SQLite::SQLite3)
+target_link_libraries(${PROJECT_NAME} SQLite::SQLite3 ${BCRYPT_LIBRARY})
