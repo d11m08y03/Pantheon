@@ -1,19 +1,7 @@
-#include "database.hpp"
-#include "models.hpp"
+#include "server.hpp"
 
 int main() {
-    Database db("./app.db", true);
-    db.ApplyMigrations();
-
-    User test = {
-        .m_name = "John",
-        .m_email = "johnemail.com",
-        .m_password = "john123ssssssssssss4"
-    };
-
-    db.CreateUser(test);
-
-    db.GetUserByEmail("johnemail.com");
-
+    Server server;
+    server.Run();
     return 0;
 }

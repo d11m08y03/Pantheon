@@ -104,7 +104,6 @@ void Database::GetUserByEmail(const std::string& email) {
         } else {
             std::cout << "User not found" << std::endl;
         }
-
     } catch (std::exception& e) {
         std::cout << e.what() << std::endl;
     }

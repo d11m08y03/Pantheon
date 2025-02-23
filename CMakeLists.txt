@@ -12,6 +12,7 @@ set(
     src/database.cc
     src/statement.cc
 		src/models.cc
+		src/server.cc
 )
 
 find_package(SQLite3 QUIET)
@@ -45,9 +46,9 @@ else()
     include(FetchContent)
 
     FetchContent_Declare(
-        bcrypt-cpp
-        GIT_REPOSITORY https://github.com/hilch/Bcrypt.cpp.git
-        GIT_TAG V2.0_NODEBCRYPT 
+				bcrypt-cpp
+				GIT_REPOSITORY https://github.com/hilch/Bcrypt.cpp.git
+				GIT_TAG V2.0_NODEBCRYPT 
 				GIT_SHALLOW TRUE
     )
 
@@ -59,6 +60,28 @@ else()
     set(BCRYPT_LIBRARY bcrypt)
 endif()
 
+find_package(Crow QUIET)
+
+if (Crow_FOUND)
+    message(STATUS "Crow library found.")
+else()
+    message(STATUS "Crow library not found. Fetching and building crow-cpp...")
+
+    include(FetchContent)
+
+    FetchContent_Declare(
+        crow-cpp
+        GIT_REPOSITORY https://github.com/CrowCpp/Crow.git
+        GIT_TAG v1.2.1.2
+        GIT_SHALLOW TRUE
+    )
+
+    FetchContent_MakeAvailable(crow-cpp)
+
+		include_directories(${crow-cpp_INCLUDE_DIR})
+    link_directories(${crow-cpp_BINARY_DIR})
+endif()
+
 add_executable(${PROJECT_NAME} ${SOURCES})
 
-target_link_libraries(${PROJECT_NAME} SQLite::SQLite3 ${BCRYPT_LIBRARY})
+target_link_libraries(${PROJECT_NAME} SQLite::SQLite3 ${BCRYPT_LIBRARY} Crow)
