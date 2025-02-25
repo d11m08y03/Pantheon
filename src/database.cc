@@ -93,18 +93,15 @@ void Database::CreateUser(const User& user) {
     }
 }
 
-void Database::GetUserByEmail(const std::string& email) {
+std::optional<User> Database::GetUserByEmail(const std::string& email) {
     try {
         Statement stmt(m_db, "SELECT * FROM TblUser WHERE Email = ?");
         stmt.BindParameters(m_db, email);
         auto user = stmt.ExecuteGet<User>(m_db);
 
-        if (user) {
-            std::cout << "User found: " << user->m_name << std::endl;
-        } else {
-            std::cout << "User not found" << std::endl;
-        }
+        return user ? user : std::nullopt;
     } catch (std::exception& e) {
         std::cout << e.what() << std::endl;
+        return std::nullopt;
     }
 }
