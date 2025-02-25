@@ -1,7 +1,6 @@
 export enum LinksEnum {
   HOME = "/",
-  OUTINGS = "/events/outings",
-  APP_CUP = "/events/app-cup",
-  CPA_CALCULATOR = "/utilities/cpa-calculator",
-  AI_DETECTOR = "/utilities/ai-detector",
+  INCOMING_EVENTS = "/Incoming-events",
+  PAST_EVENTS = "/PastEvents",
+  ADMIN = "/Admin",
 }

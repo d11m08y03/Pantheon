@@ -7,6 +7,10 @@ export default {
   ],
   theme: {
   	extend: {
+		fontFamily: {
+			pacifico: ['Pacifico', 'sans-serif'],
+			playwrite: ['Playwrite IT Moderna', 'serif'],
+		  },
   		borderRadius: {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
