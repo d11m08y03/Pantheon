@@ -6,6 +6,7 @@
       "-I/home/zakariyya/Programming/pantheon/include",
       "-I/home/zakariyya/Programming/pantheon/build/_deps/bcrypt-cpp-src/include",
       "-I/home/zakariyya/Programming/pantheon/build/_deps/crow-cpp-src/include",
+      "-I/home/zakariyya/Programming/pantheon/build/_deps/jwt-cpp-src/include",
       "-std=gnu++17",
       "-c",
       "-o",

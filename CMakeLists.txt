@@ -82,6 +82,26 @@ else()
     link_directories(${crow-cpp_BINARY_DIR})
 endif()
 
+find_package(jwt-cpp QUIET)
+
+if(jwt-cpp_FOUND)
+    message(STATUS "JWT library found.")
+else()
+    message(STATUS "JWT library not found. Fetching and building jwt-cpp...")
+
+    include(FetchContent)
+
+    FetchContent_Declare(
+        jwt-cpp
+        GIT_REPOSITORY https://github.com/Thalhammer/jwt-cpp.git
+        GIT_TAG v0.7.0
+        GIT_SHALLOW TRUE
+    )
+
+    # Fetch the content and make it available
+    FetchContent_MakeAvailable(jwt-cpp)
+endif()
+
 add_executable(${PROJECT_NAME} ${SOURCES})
 
-target_link_libraries(${PROJECT_NAME} SQLite::SQLite3 ${BCRYPT_LIBRARY} Crow)
+target_link_libraries(${PROJECT_NAME} SQLite::SQLite3 ${BCRYPT_LIBRARY} Crow jwt-cpp)
