@@ -1,10 +1,8 @@
 #include "database.hpp"
 
-#include <exception>
 #include <filesystem>
 #include <fstream>
 #include <iostream>
-#include <stdexcept>
 #include <string>
 
 #include "bcrypt.h"
@@ -80,22 +78,22 @@ void Database::CreateUser(const User& user) {
     try {
         Statement stmt(
             m_db,
-            "INSERT INTO TblUser (Name, Email, Password) VALUES (?, ?, ?)"
+            "INSERT INTO TblUser (Name, Email, Password) VALUES (?, ?, ?);"
         );
 
         std::string hash = bcrypt::generateHash(user.m_password);
-        std::cout << hash << std::endl;
 
         stmt.BindParameters(m_db, user.m_name, user.m_email, hash);
         stmt.ExecuteInsert(m_db);
     } catch (std::exception& e) {
-        std::cout << e.what() << std::endl;
+        std::clog << e.what() << "\n";
+        throw;
     }
 }
 
 std::optional<User> Database::GetUserByEmail(const std::string& email) {
     try {
-        Statement stmt(m_db, "SELECT * FROM TblUser WHERE Email = ?");
+        Statement stmt(m_db, "SELECT * FROM TblUser WHERE Email = ?;");
         stmt.BindParameters(m_db, email);
         auto user = stmt.ExecuteGet<User>(m_db);
 

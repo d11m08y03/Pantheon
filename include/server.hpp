@@ -8,6 +8,7 @@ class Server {
     int m_port;
 
     void SetupRoutes();
+    void ValidateJWT(const std::string& token);
 
   public:
     Server(int port = 8080);

@@ -23,7 +23,7 @@ class Statement {
                          index++,
                          args.c_str(),
                          -1,
-                         SQLITE_STATIC
+                         SQLITE_TRANSIENT // This is evil. Never use SQLITE_STATIC with non literal strings.
                      )
                      != SQLITE_OK) {
                      throw std::runtime_error(

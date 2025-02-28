@@ -20,9 +20,28 @@ sqlite3_stmt* Statement::Get() const {
 }
 
 void Statement::ExecuteInsert(sqlite3* db) {
-    if (sqlite3_step(m_stmt) != SQLITE_DONE) {
-        throw std::runtime_error(
-            "Failed to execute statement: " + std::string(sqlite3_errmsg(db))
-        );
+    int result = sqlite3_step(m_stmt);
+    if (result != SQLITE_DONE) {
+        std::string error_message = sqlite3_errmsg(db);
+        switch (result) {
+            case SQLITE_BUSY:
+                throw std::runtime_error("Database is busy: " + error_message);
+            case SQLITE_LOCKED:
+                throw std::runtime_error(
+                    "Database is locked: " + error_message
+                );
+            case SQLITE_CORRUPT:
+                throw std::runtime_error(
+                    "Database file is corrupt: " + error_message
+                );
+            case SQLITE_CONSTRAINT:
+                throw std::runtime_error(
+                    "Constraint violation: " + error_message
+                );
+            case SQLITE_ERROR:
+                throw std::runtime_error("SQL error: " + error_message);
+            default:
+                throw std::runtime_error("Unknown error: " + error_message);
+        }
     }
 }
