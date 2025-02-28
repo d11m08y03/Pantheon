@@ -95,52 +95,33 @@
   }
 }
 
-
-
-@layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
-}
-body{
-  overflow-x: hidden;
-  
-}
-/* For the binary digits */
-.binaryDigit {
-  position: absolute;
-  top: -20px; /* Start above the screen */
-  font-family: monospace;
-  font-size: 24px;
-  color: #00ff00;
-  opacity: 0;
-  animation: fall 5s linear infinite, pulse 2s ease-in-out infinite alternate;
-  will-change: transform, opacity; /* Hint to the browser for optimization */
-}
-
-/* Animation for falling effect */
 @keyframes fall {
-  0% {
-    top: -20px;
-    opacity: 0.5;
+  from {
+    transform: translateY(-100%);
+    opacity: 1;
   }
-  100% {
-    top: 100vh; /* Falls off the bottom */
+  to {
+    transform: translateY(100vh);
     opacity: 0;
   }
 }
 
-/* Pulse effect for changing color */
-@keyframes pulse {
-  0% {
-    color: lightgreen;
-  }
-  100% {
-    color: #222222;
-  }
+.binaryDigit {
+  position: absolute;
+  top: 0;
+  font-size: 1.2rem;
+  color: black; /* Black color for the digits */
+  animation: fall 5s linear;
+  pointer-events: none;
+}
+
+.binaryDigit {
+  position: absolute;
+  top: 0;
+  font-size: 1.2rem;
+  color: black; /* Black color for the digits */
+  animation: fall 5s linear;
+  pointer-events: none;
 }
 
 
