@@ -5,7 +5,7 @@ import dummy from '../assets/dummy-logo.png';
 import { IoAddCircleOutline } from "react-icons/io5";
 import { LogIn } from 'lucide-react';
 
-const isAdmin = true;
+const isAdmin = false;
 const isLogged = true;
 
 const Nav = () => {

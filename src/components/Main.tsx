@@ -1,13 +1,13 @@
-import Events from "./UpcomingEventCard";
-import { InteractiveHoverButton } from "./magicui/interactive-hover-button";
-import { TypingAnimation } from "./magicui/typing-animation";
-import { BinaryBackground } from "./BinaryBackground";
 import { useNavigate } from "react-router-dom";
-import { LinksEnum } from "@/lib/LinksEnum";
 import { useEffect, useState } from "react";
+import { LinksEnum } from "@/lib/LinksEnum";
 import { UpcomingEventsData } from "./UpcomingEventsData";
 import { PastActivities } from "./PastEventsData";
 import HighlightCard from "./HighlightsCard";
+import UpcomingEventCard from "./UpcomingEventCard";
+import { InteractiveHoverButton } from "./magicui/interactive-hover-button";
+import { TypingAnimation } from "./magicui/typing-animation";
+import { BinaryBackground } from "./BinaryBackground";
 
 export const Main: React.FC = () => {
   const navigate = useNavigate();
@@ -18,47 +18,42 @@ export const Main: React.FC = () => {
   };
 
   const selectedEvents = UpcomingEventsData.slice(0, 3);
-  const pastSelectedEvents = PastActivities.slice(0, 3);
+  const pastSelectedEvents = PastActivities.slice(0, 2);
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowContent(true);
-    }, 200);
+    }, 500);
     return () => clearTimeout(timer);
   }, []);
 
   return (
     <div className="relative w-full min-h-screen bg-cover bg-center bg-fixed flex flex-col">
-      
       <BinaryBackground className="hidden lg:block" />
-
-  
       <div
-        className={`mt-52 flex flex-col justify-center items-center transition-opacity duration-500 ${
+        className={`mt-28 md:mt-40 lg:mt-52 xl:mt-52 flex flex-col justify-center items-center transition-opacity duration-500 ${
           showContent ? "opacity-100" : "opacity-0"
         }`}
       >
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-2 text-center">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-center">
           <TypingAnimation className="text-2xl md:text-3xl lg:text-5xl xl:text-5xl">
             Welcome to the UoM Computer Club
           </TypingAnimation>
         </h1>
-        <h2 className="text-lg sm:text-lg mb-4 text-center">
+        <h2 className="text-lg sm:text-lg mb-6 text-center">
           Empowering students through technology, innovation, and collaboration.
         </h2>
 
-      
         <button
-          className="mt-10 px-6 py-2 rounded-lg transition-all"
+          className="mt-10 px-8 py-3 rounded-lg transition-all"
           onClick={handleViewUpcomingEvents}
         >
-          <InteractiveHoverButton>
+          <InteractiveHoverButton className="text-xs lg:text-xl xl:text-xl">
             View all our upcoming events
           </InteractiveHoverButton>
         </button>
 
-    
-        <div className="flex flex-col items-center mt-8">
+        <div className="flex flex-col items-center mt-32 md:mt-40 lg:mt-40 xl:mt-40">
           <h2 className="text-xl sm:text-2xl font-semibold text-gray-800 transition-transform duration-300 hover:scale-105 hover:opacity-80">
             <span className="block text-transparent bg-clip-text bg-gradient-to-r from-gray-800 to-blue-500">
               Scroll to see our newest events
@@ -83,33 +78,44 @@ export const Main: React.FC = () => {
         </div>
       </div>
 
-  
-      <section className="py-10 bg-white">
+      <section className="py-12 bg-white">
         <div className="text-center">
-          <h2 className="text-xl sm:text-2xl font-semibold text-gray-800 mb-6">
-            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-gray-800 to-blue-500">
-              Upcoming Events
-            </span>
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 px-8">
+          <div
+            className="flex flex-wrap justify-center gap-6 px-4 sm:px-8 transition-opacity duration-500"
+            style={{
+              opacity: showContent ? 1 : 0,
+              transform: showContent ? "none" : "translateY(30px)",
+              transition: "opacity 0.7s, transform 0.7s",
+            }}
+          >
             {selectedEvents.map((event, index) => (
-              <Events key={index} eventData={event} />
+              <UpcomingEventCard key={index} eventData={event} />
             ))}
           </div>
         </div>
       </section>
 
- 
-      <section className="py-10 bg-gray-50">
+      <section className="py-12 bg-gray-50">
         <div className="text-center">
           <h2 className="text-xl sm:text-2xl font-semibold text-gray-800 mb-6">
             <span className="block text-transparent bg-clip-text bg-gradient-to-r from-gray-800 to-blue-500">
               View the Highlights of Our Club
             </span>
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 px-8">
+          <div
+            className="flex flex-wrap justify-center gap-6 px-4 sm:px-8 transition-opacity duration-500"
+            style={{
+              opacity: showContent ? 1 : 0,
+              transform: showContent ? "none" : "translateY(30px)",
+              transition: "opacity 0.7s, transform 0.7s",
+            }}
+          >
             {pastSelectedEvents.map((event, index) => (
-              <HighlightCard key={index} eventData={event} />
+              <HighlightCard
+                key={index}
+                eventData={event}
+                className="max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl "
+              />
             ))}
           </div>
         </div>

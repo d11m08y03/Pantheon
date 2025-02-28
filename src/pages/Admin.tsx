@@ -81,7 +81,7 @@ const AdminEvent = () => {
   return (
     <div>
       <Nav />
-      <div className="max-w-2xl mx-auto mt-20 p-6 bg-white rounded-lg shadow-lg">
+      <div className="max-w-2xl mx-auto mt-12 lg:mt-20 xl:mt-20 p-6 bg-white rounded-lg shadow-lg">
         <h2 className="text-2xl font-semibold mb-6 text-center text-gray-800">Create Event</h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -97,7 +97,7 @@ const AdminEvent = () => {
             />
           </div>
 
-          {/* Event Description */}
+    
           <div>
             <label className="block text-sm font-medium text-gray-700">Event Description *</label>
             <Textarea
@@ -109,7 +109,7 @@ const AdminEvent = () => {
             />
           </div>
 
-          {/* Event Location */}
+     
           <div>
             <label className="block text-sm font-medium text-gray-700">Event Location *</label>
             <Input
@@ -121,7 +121,7 @@ const AdminEvent = () => {
             />
           </div>
 
-          {/* Event Capacity */}
+  
           <div>
             <label className="block text-sm font-medium text-gray-700">Event Capacity *</label>
             <Input
@@ -133,7 +133,7 @@ const AdminEvent = () => {
             />
           </div>
 
-          {/* Event Image */}
+     
           <div>
             <label className="block text-sm font-medium text-gray-700">Event Image *</label>
             <div className="flex items-center gap-4">
@@ -191,7 +191,7 @@ const AdminEvent = () => {
             )}
           </div>
 
-          {/* Event Date */}
+    
           <div>
             <label className="block text-sm font-medium text-gray-700">Event Date *</label>
             <Popover>

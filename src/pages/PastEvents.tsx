@@ -1,103 +1,89 @@
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { useRef, useEffect, useState } from 'react';
-import ActivityCard from '@/components/PastActivityCard';
-import Nav from '@/components/Nav';
-import { PastActivities } from '@/components/PastEventsData';
+import React from "react";
+import TimelineEvent from "../components/TimelineEvent";
+import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
+import { PastActivities } from "../components/PastEventsData";
+import Nav from "@/components/Nav";
+import { SparklesText } from "@/components/magicui/sparkles-text";
 
-const PastEvents = () => {
-  const { scrollYProgress } = useScroll();
-  const lineHeight = useTransform(scrollYProgress, [0, 1], ['0%', '100%']); 
+interface TimelineItem {
+  id: number;
+  year: number;
+  title: string;
+  description: string;
+  date?: string;
+  imageUrl?: string;
+  category?: string;
+}
 
-  const groupedActivities = PastActivities.reduce((acc, activity) => {
-    const year = activity.year;
-    if (!acc[year]) {
-      acc[year] = [];
-    }
-    acc[year].push(activity);
-    return acc;
-  }, {} as Record<number, typeof PastActivities>);
-
-  const years = Object.keys(groupedActivities).map(Number).sort((a, b) => b - a);
+const Timeline: React.FC = () => {
+  let previousYear: number | null = null; 
 
   return (
     <>
       <Nav />
-      <div className="min-h-screen bg-neutral-50">
-        {/* Hero Section */}
-        <section className="py-20 bg-gradient-to-r from-blue-600 to-blue-800 text-white">
-          <div className="container relative">
-            <div className="mb-12 text-center">
-              <motion.h1
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-                className="mb-6 text-5xl font-bold tracking-tight sm:text-6xl mt-5"
-              >
-                Discover Our Past Events & Activities
-              </motion.h1>
-              <motion.p
-  initial={{ opacity: 0, y: 20 }}
-  animate={{ opacity: 1, y: 0 }}
-  transition={{ duration: 0.5, delay: 0.1 }}
-  className="text-xl text-white/90 w-3/4 text-center mx-auto"
->
-  Take a look at some of our most impactful and engaging events from the past years. Scroll through our journey and discover the events that have made us who we are today.
-</motion.p>
+      <h1 className="text-3xl md:text-5xl font-semibold text-center text-gray-900 dark:text-gray-100 mb-6 mt-20 px-4">
+      <SparklesText className="text-4xl" text="A Journey Through Time: The Story of Our Club's Achievements" />
+        
+      </h1>
 
-            </div>
-          </div>
-        </section>
+      <div className="w-full max-w-screen-lg mx-auto px-4 md:px-6 py-12">
+        <div className="relative">
+          {/* Vertical line in the center - hidden on mobile */}
+          <div className="absolute left-1/2 transform -translate-x-1/2 w-1 bg-gray-200 h-full hidden md:block"></div>
 
-        {/* Activities Timeline Section */}
-        <section className="py-20">
-          <div className="container relative">
-           
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="mb-8 text-center"
+          />
 
-            {/* Timeline and Cards Layout */}
-            <div className="flex justify-between">
-              {/* Timeline Section - Only the vertical line */}
-              <div className="relative w-1/4">
-                {/* Animated Timeline Line */}
-                <motion.div
-                  style={{ height: lineHeight }}
-                  transition={{ duration: 1, ease: 'easeInOut' }}
-                  className="absolute top-0 left-1/2 transform -translate-x-1/2 w-1 bg-neutral-200"
-                ></motion.div>
-              </div>
+          <div className="relative">
+            {PastActivities.map((item, index) => {
+              const showYear = item.year !== previousYear;
+              previousYear = item.year; 
 
-              {/* Activity Cards Section - No Year Labels */}
-              <div className="w-3/4 space-y-16">
-                {years.map((year) => (
-                  <div key={year}>
-                    {/* Activity Cards */}
-                    <div className="space-y-12">
-                      {groupedActivities[year].map((activity, index) => (
-                        <motion.div
-                          key={index}
-                          className="flex items-center space-x-6 justify-start"
-                          initial={{ opacity: 0, x: -30 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{
-                            duration: 0.5,
-                            delay: 0.1 * index,
-                            ease: 'easeInOut'
-                          }}
-                        >
-                          <div className="max-w-4xl w-full">
-                            <ActivityCard {...activity} />
-                          </div>
-                        </motion.div>
-                      ))}
+            
+              const { ref, inView } = useInView({
+                threshold: 0.3,
+                triggerOnce: false
+              });
+
+              return (
+                <div
+                  ref={ref}
+                  key={item.id}
+                  className={`flex flex-col md:flex-row items-center justify-between mb-10`}
+                >
+                  {showYear && (
+                    <div className="text-center flex-shrink-0 mb-4 md:mb-0">
+                      <span className="text-3xl md:text-4xl font-semibold text-gray-700">
+                        {item.year}
+                      </span>
                     </div>
+                  )}
+
+                  <div className="w-full md:w-1/2">
+                    <TimelineEvent
+                      year={item.year}
+                      title={item.title}
+                      description={item.description}
+                      isVisible={inView}
+                      imageUrls={item.imageUrls}
+                      date={item.date}
+                      category={item.category}
+                      index={index}
+                    />
                   </div>
-                ))}
-              </div>
-            </div>
+                </div>
+              );
+            })}
           </div>
-        </section>
+        </div>
       </div>
     </>
   );
 };
 
-export default PastEvents;
+export default Timeline;

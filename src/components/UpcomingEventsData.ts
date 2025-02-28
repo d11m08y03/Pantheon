@@ -11,14 +11,14 @@ export const UpcomingEventsData = [
     date: "April 22, 2025",
     description: "An insightful workshop exploring artificial intelligence, machine learning, and their applications.",
     category: "Workshop",
-    imageUrl: "https://i.ytimg.com/vi/Bmw7IIEzv7w/maxresdefault.jpg", // Working example
+    imageUrl: "https://i.ytimg.com/vi/Bmw7IIEzv7w/maxresdefault.jpg", 
   },
   {
     title: "Cybersecurity Bootcamp",
     date: "May 5, 2025",
     description: "Learn the fundamentals of cybersecurity and how to protect your digital presence in this hands-on bootcamp.",
     category: "Security",
-    imageUrl: "https://pics.craiyon.com/2023-06-24/a2826f5c3bc8404080978d8f33407112.webp", // Working example
+    imageUrl: "https://pics.craiyon.com/2023-06-24/a2826f5c3bc8404080978d8f33407112.webp", 
   },
   {
     title: "Open Source Contribution Day",
@@ -32,6 +32,6 @@ export const UpcomingEventsData = [
     date: "June 1, 2025",
     description: "Join us for a weekend of game creation, where developers and designers come together to create a fully playable game in just 48 hours.",
     category: "Game Development",
-    imageUrl: "https://images.unsplash.com/photo-1593642532973-d31b6557fa68", // Working example
+    imageUrl: "https://images.unsplash.com/photo-1593642532973-d31b6557fa68", 
   }
 ];
