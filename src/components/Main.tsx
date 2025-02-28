@@ -78,10 +78,10 @@ export const Main: React.FC = () => {
         </div>
       </div>
 
-      <section className="py-12 bg-white">
+      <section className="bg-white container mx-auto">
         <div className="text-center">
           <div
-            className="flex flex-wrap justify-center gap-6 px-4 sm:px-8 transition-opacity duration-500"
+            className="flex flex-wrap justify-between sm:px-8 transition-opacity duration-500"
             style={{
               opacity: showContent ? 1 : 0,
               transform: showContent ? "none" : "translateY(30px)",
@@ -95,7 +95,7 @@ export const Main: React.FC = () => {
         </div>
       </section>
 
-      <section className="py-12 bg-gray-50">
+      <section className="py-12 bg-white container mx-auto">
         <div className="text-center">
           <h2 className="text-xl sm:text-2xl font-semibold text-gray-800 mb-6">
             <span className="block text-transparent bg-clip-text bg-gradient-to-r from-gray-800 to-blue-500">
@@ -103,7 +103,7 @@ export const Main: React.FC = () => {
             </span>
           </h2>
           <div
-            className="flex flex-wrap justify-center gap-6 px-4 sm:px-8 transition-opacity duration-500"
+            className="flex flex-wrap justify-between sm:px-8 transition-opacity duration-500"
             style={{
               opacity: showContent ? 1 : 0,
               transform: showContent ? "none" : "translateY(30px)",
@@ -114,7 +114,7 @@ export const Main: React.FC = () => {
               <HighlightCard
                 key={index}
                 eventData={event}
-                className="max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl "
+                className="w-full"
               />
             ))}
           </div>

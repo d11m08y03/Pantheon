@@ -17,7 +17,7 @@ interface HighlightCardProps {
 
 const HighlightCard: React.FC<HighlightCardProps> = ({ eventData, className }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isHovered, setIsHovered] = useState(false);
+  const [_, setIsHovered] = useState(false);
 
   const nextImage = () => {
     setCurrentIndex((prev) => (prev + 1) % eventData.imageUrls.length);
