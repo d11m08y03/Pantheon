@@ -1,71 +1,21 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef, useEffect, useState } from 'react';
-import ActivityCard from '@/components/ActivityCard';
+import ActivityCard from '@/components/PastActivityCard';
 import Nav from '@/components/Nav';
-
-const activities = [
-  {
-    title: "Annual Tech Conference 2023",
-    date: "December 15, 2023",
-    description: "A gathering of industry experts and enthusiasts discussing the latest trends in technology.",
-    imageUrl: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=2000&q=80",
-    category: "Conference",
-    year: 2023
-  },
-  {
-    title: "Coding Workshop Series",
-    date: "November 5, 2023",
-    description: "Hands-on workshop teaching modern web development practices and techniques.",
-    imageUrl: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=2000&q=80",
-    category: "Workshop",
-    year: 2023
-  },
-  {
-    title: "Design Thinking Masterclass",
-    date: "October 20, 2023",
-    description: "An intensive session on applying design thinking principles to solve real-world problems.",
-    imageUrl: "https://images.unsplash.com/photo-1473091534298-04dcbce3278c?auto=format&fit=crop&w=2000&q=80",
-    category: "Masterclass",
-    year: 2023
-  },
-  {
-    title: "Tech Innovation Summit",
-    date: "December 10, 2022",
-    description: "A showcase of groundbreaking technologies and innovative solutions from industry leaders.",
-    imageUrl: "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=2000&q=80",
-    category: "Summit",
-    year: 2022
-  },
-  {
-    title: "Web Development Bootcamp",
-    date: "September 15, 2022",
-    description: "Intensive training program covering full-stack web development fundamentals.",
-    imageUrl: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=2000&q=80",
-    category: "Bootcamp",
-    year: 2022
-  },
-  {
-    title: "AI/ML Workshop Series",
-    date: "July 20, 2022",
-    description: "Deep dive into artificial intelligence and machine learning concepts and applications.",
-    imageUrl: "https://images.unsplash.com/photo-1555949963-aa79dcee981c?auto=format&fit=crop&w=2000&q=80",
-    category: "Workshop",
-    year: 2022
-  }
-];
+import { PastActivities } from '@/components/PastEventsData';
 
 const PastEvents = () => {
   const { scrollYProgress } = useScroll();
   const lineHeight = useTransform(scrollYProgress, [0, 1], ['0%', '100%']); 
 
-  const groupedActivities = activities.reduce((acc, activity) => {
+  const groupedActivities = PastActivities.reduce((acc, activity) => {
     const year = activity.year;
     if (!acc[year]) {
       acc[year] = [];
     }
     acc[year].push(activity);
     return acc;
-  }, {} as Record<number, typeof activities>);
+  }, {} as Record<number, typeof PastActivities>);
 
   const years = Object.keys(groupedActivities).map(Number).sort((a, b) => b - a);
 
@@ -74,7 +24,7 @@ const PastEvents = () => {
       <Nav />
       <div className="min-h-screen bg-neutral-50">
         {/* Hero Section */}
-        <section className="py-20 bg-gradient-to-r from-indigo-600 to-purple-800 text-white">
+        <section className="py-20 bg-gradient-to-r from-blue-600 to-blue-800 text-white">
           <div className="container relative">
             <div className="mb-12 text-center">
               <motion.h1

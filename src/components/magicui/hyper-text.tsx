@@ -34,7 +34,7 @@ const getRandomInt = (max: number): number => Math.floor(Math.random() * max);
 export function HyperText({
   children,
   className,
-  duration = 800,
+  duration = 2,
   delay = 0,
   as: Component = "div",
   startOnView = false,
@@ -46,17 +46,17 @@ export function HyperText({
     forwardMotionProps: true,
   });
 
-  const [displayText, setDisplayText] = useState<string[]>(() =>
-    children.split(""),
-  );
+  const [displayText, setDisplayText] = useState<string[]>(() => children.split(""));
   const [isAnimating, setIsAnimating] = useState(false);
+  const [hasStarted, setHasStarted] = useState(false);  // Track animation state
   const iterationCount = useRef(0);
   const elementRef = useRef<HTMLElement>(null);
 
   const handleAnimationTrigger = () => {
-    if (animateOnHover && !isAnimating) {
+    if (animateOnHover && !isAnimating && !hasStarted) {
       iterationCount.current = 0;
       setIsAnimating(true);
+      setHasStarted(true); // Mark as started
     }
   };
 

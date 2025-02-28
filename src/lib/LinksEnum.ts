@@ -1,6 +1,7 @@
 export enum LinksEnum {
   HOME = "/",
-  INCOMING_EVENTS = "/Incoming-events",
   PAST_EVENTS = "/PastEvents",
   ADMIN = "/Admin",
+  LOGIN = "/Login",
+  UPCOMING_EVENTS = "/UpcomingEvents",
 }

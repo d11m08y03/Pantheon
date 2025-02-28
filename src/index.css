@@ -37,6 +37,11 @@
     --sidebar-accent-foreground: 240 5.9% 10%;
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+    --color-1: 0 100% 63%;
+    --color-2: 270 100% 63%;
+    --color-3: 210 100% 63%;
+    --color-4: 195 100% 63%;
+    --color-5: 90 100% 63%;
   }
 
   .dark {
@@ -72,6 +77,11 @@
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+    --color-1: 0 100% 63%;
+    --color-2: 270 100% 63%;
+    --color-3: 210 100% 63%;
+    --color-4: 195 100% 63%;
+    --color-5: 90 100% 63%;
   }
 }
 
@@ -96,5 +106,55 @@
   }
 }
 body{
+  overflow-x: hidden;
   
 }
+/* For the binary digits */
+.binaryDigit {
+  position: absolute;
+  top: -20px; /* Start above the screen */
+  font-family: monospace;
+  font-size: 24px;
+  color: #00ff00;
+  opacity: 0;
+  animation: fall 5s linear infinite, pulse 2s ease-in-out infinite alternate;
+  will-change: transform, opacity; /* Hint to the browser for optimization */
+}
+
+/* Animation for falling effect */
+@keyframes fall {
+  0% {
+    top: -20px;
+    opacity: 0.5;
+  }
+  100% {
+    top: 100vh; /* Falls off the bottom */
+    opacity: 0;
+  }
+}
+
+/* Pulse effect for changing color */
+@keyframes pulse {
+  0% {
+    color: lightgreen;
+  }
+  100% {
+    color: #222222;
+  }
+}
+
+
+/* Reset the margin and padding for all elements */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Ensure full height and width for the body and html */
+html, body {
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden; /* Prevent horizontal overflow */
+}
+
