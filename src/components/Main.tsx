@@ -4,12 +4,11 @@ import { LinksEnum } from "@/lib/LinksEnum";
 import { UpcomingEventsData } from "./UpcomingEventsData";
 import { PastActivities } from "./PastEventsData";
 import HighlightCard from "./HighlightsCard";
-import UpcomingEventCard from "./UpcomingEventCard";
 import { InteractiveHoverButton } from "./magicui/interactive-hover-button";
 import { TypingAnimation } from "./magicui/typing-animation";
 import { BinaryBackground } from "./BinaryBackground";
 import { Card, CardContent, CardFooter, CardHeader } from "./ui/card";
-
+import IncomingPoster from '../components/IncomingPoster'
 export const Main: React.FC = () => {
 	const navigate = useNavigate();
 	const [showContent, setShowContent] = useState(false);
@@ -66,10 +65,10 @@ export const Main: React.FC = () => {
       {/* Upcoming Events */}
       <section className="bg-white container mx-auto py-12">
         <div className="text-center">
-          <div className="flex flex-wrap justify-between sm:px-8 transition-opacity duration-500"
+          <div className="flex flex-wrap justify-center sm:px-8 transition-opacity duration-500"
             style={{ opacity: showContent ? 1 : 0, transform: showContent ? "none" : "translateY(30px)", transition: "opacity 0.7s, transform 0.7s" }}>
-            {UpcomingEventsData.slice(0, 3).map((event, index) => (
-              <UpcomingEventCard key={index} eventData={event} />
+            {UpcomingEventsData.slice(0, 1).map((event, index) => (
+              <IncomingPoster key={index} eventData={event} />
             ))}
           </div>
         </div>
