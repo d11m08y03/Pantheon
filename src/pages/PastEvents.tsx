@@ -29,7 +29,7 @@ const Timeline: React.FC = () => {
 
       <div className="w-full max-w-screen-lg mx-auto px-4 md:px-6 py-12">
         <div className="relative">
-          {/* Vertical line in the center - hidden on mobile */}
+        
           <div className="absolute left-1/2 transform -translate-x-1/2 w-1 bg-gray-200 h-full hidden md:block"></div>
 
           <motion.div
