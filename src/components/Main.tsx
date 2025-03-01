@@ -26,8 +26,8 @@ export const Main: React.FC = () => {
 
   return (
     <div className="relative w-full min-h-screen flex flex-col bg-cover bg-center bg-fixed">
-      {/* Restrict Binary Background Height */}
-      <div className="absolute inset-0 h-[60vh] lg:h-[70vh] overflow-hidden z-0">
+      
+      <div className="absolute inset-0 h-[90vh] lg:h-[90vh] overflow-hidden z-0">
         <BinaryBackground className="hidden lg:block w-full h-full" />
       </div>
 
