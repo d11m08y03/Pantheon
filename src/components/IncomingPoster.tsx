@@ -12,8 +12,12 @@ interface EventData {
   description: string;
 }
 
-export default function IncomingPoster({ eventData }: { eventData: EventData }) {
-  const [isOpen, setIsOpen] = useState(false); 
+export default function IncomingPoster({
+  eventData,
+}: {
+  eventData: EventData;
+}) {
+  const [isOpen, setIsOpen] = useState(false);
   const [teamName, setTeamName] = useState("");
   const [members, setMembers] = useState("");
   const [email, setEmail] = useState("");
@@ -38,7 +42,7 @@ export default function IncomingPoster({ eventData }: { eventData: EventData }) 
   };
 
   const handleClose = () => {
-    setIsOpen(false);  
+    setIsOpen(false);
   };
 
   return (
@@ -49,11 +53,11 @@ export default function IncomingPoster({ eventData }: { eventData: EventData }) 
         whileInView={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.5 }}
         viewport={{ once: true, margin: "-100px" }}
-        className="relative overflow-hidden rounded-lg bg-white shadow-lg transition-shadow duration-300 hover:shadow-xl mb-16 mt-16 ml-4 mr-4 w-full sm:w-[800px] lg:w-[900px] h-[600px] sm:h-[700px] lg:h-[700px]"
+        className="relative overflow-hidden rounded-lg bg-white shadow-lg transition-shadow duration-300 hover:shadow-xl h-full w-full"
       >
         <div className="flex w-full h-full">
           {/* Left Side: Image */}
-          <div className="w-11/12 aspect-[16/9] overflow-hidden">
+          <div className="w-1/2 aspect-[9/8] overflow-hidden">
             <img
               src={eventData.imageUrl}
               alt={eventData.title}
@@ -68,21 +72,25 @@ export default function IncomingPoster({ eventData }: { eventData: EventData }) 
                 <span className="rounded-full bg-neutral-100 px-4 py-2 text-lg font-medium text-neutral-600">
                   {eventData.category}
                 </span>
-                <span className="text-lg text-neutral-500">{eventData.date}</span>
+                <span className="text-lg text-neutral-500">
+                  {eventData.date}
+                </span>
               </div>
 
               <h3 className="mb-4 text-2xl font-semibold tracking-tight text-neutral-900">
                 {eventData.title}
               </h3>
 
-              <p className="text-lg text-neutral-600">{eventData.description}</p>
+              <p className="text-lg text-neutral-600">
+                {eventData.description}
+              </p>
             </div>
 
             <div className="mt-6 flex justify-center">
               <Button
                 className="w-full mt-5 hover:bg-blue-500 hover:text-white"
                 variant="outline"
-                onClick={handleButtonClick} 
+                onClick={handleButtonClick}
               >
                 Enroll for this event
               </Button>
@@ -126,11 +134,16 @@ export default function IncomingPoster({ eventData }: { eventData: EventData }) 
                 <input
                   type="file"
                   accept=".pdf"
-                  onChange={(e) => setProposal(e.target.files ? e.target.files[0] : null)}
+                  onChange={(e) =>
+                    setProposal(e.target.files ? e.target.files[0] : null)
+                  }
                   required
                   className="w-full p-2 border border-gray-300 rounded-md"
                 />
-                <Button type="submit" className="w-full bg-blue-500 text-white hover:bg-blue-700">
+                <Button
+                  type="submit"
+                  className="w-full bg-blue-500 text-white hover:bg-blue-700"
+                >
                   Submit Proposal
                 </Button>
                 <Button
