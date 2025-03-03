@@ -17,17 +17,16 @@ interface TimelineItem {
 }
 
 const Timeline: React.FC = () => {
-  let previousYear: number | null = null; 
+  let previousYear: number | null = null;
 
   return (
     <>
       <Nav />
       <h1 className="text-3xl md:text-5xl font-semibold text-center text-gray-900 dark:text-gray-100 mb-6 mt-20 px-4">
-      <SparklesText className="text-4xl" text="A Journey Through Time: The Story of Our Club's Achievements" />
-        
+        <SparklesText className="text-4xl" text="A Journey Through Time: The Story of Our Club's Achievements" />
       </h1>
 
-      <div className="w-full max-w-screen-lg mx-auto px-4 md:px-6 py-12">
+      <div className="w-full max-w-[1500px] mx-auto px-4 md:px-6 py-12">
         <div className="relative">
         
           <div className="absolute left-1/2 transform -translate-x-1/2 w-1 bg-gray-200 h-full hidden md:block"></div>
@@ -39,12 +38,11 @@ const Timeline: React.FC = () => {
             className="mb-8 text-center"
           />
 
-          <div className="relative">
+          <div className="relative w-full">
             {PastActivities.map((item, index) => {
               const showYear = item.year !== previousYear;
-              previousYear = item.year; 
+              previousYear = item.year;
 
-            
               const { ref, inView } = useInView({
                 threshold: 0.3,
                 triggerOnce: false
@@ -58,7 +56,7 @@ const Timeline: React.FC = () => {
                 >
                   {showYear && (
                     <div className="text-center flex-shrink-0 mb-4 md:mb-0">
-                      <span className="text-3xl md:text-4xl font-semibold text-gray-700">
+                      <span className="text-3xl md:text-4xl font-semibold text-gray-700 md:ml-64">
                         {item.year}
                       </span>
                     </div>

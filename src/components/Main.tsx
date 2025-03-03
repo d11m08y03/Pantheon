@@ -8,6 +8,7 @@ import { InteractiveHoverButton } from "./magicui/interactive-hover-button";
 import { TypingAnimation } from "./magicui/typing-animation";
 import { BinaryBackground } from "./BinaryBackground";
 import IncomingPoster from "../components/IncomingPoster";
+
 export const Main: React.FC = () => {
   const navigate = useNavigate();
   const [showContent, setShowContent] = useState(false);
@@ -21,6 +22,10 @@ export const Main: React.FC = () => {
 
   const handleViewUpcomingEvents = () => {
     navigate(LinksEnum.UPCOMING_EVENTS);
+    const highlightsSection = document.getElementById("highlights");
+    if (highlightsSection) {
+      highlightsSection.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   return (
@@ -46,7 +51,7 @@ export const Main: React.FC = () => {
           onClick={handleViewUpcomingEvents}
         >
           <InteractiveHoverButton className="text-xs lg:text-xl xl:text-xl">
-            View all our upcoming events
+            View the highlights of our club
           </InteractiveHoverButton>
         </button>
       </div>
@@ -80,7 +85,7 @@ export const Main: React.FC = () => {
       <section className="bg-white container mx-auto py-12">
         <div className="text-center">
           <div
-            className="flex flex-wrap justify-center sm:px-8 transition-opacity duration-500"
+            className="flex flex-wrap justify-center sm:px-8 transition-opacity duration-500 mx-1"
             style={{
               opacity: showContent ? 1 : 0,
               transform: showContent ? "none" : "translateY(30px)",
@@ -95,15 +100,15 @@ export const Main: React.FC = () => {
       </section>
 
       {/* Highlights Section */}
-      <section className="bg-white container mx-auto py-12">
+      <section id="highlights" className="bg-white container mx-auto py-12">
         <div className="text-center">
           <h2 className="text-xl sm:text-2xl font-semibold text-gray-800 mb-6">
             <span className="block text-transparent bg-clip-text bg-gradient-to-r from-gray-800 to-blue-500">
               View the Highlights of Our Club
             </span>
           </h2>
-          <div
-            className="flex flex-wrap justify-between sm:px-8 gap-4 sm:gap-6 md:gap-8 lg:gap-10 transition-opacity duration-500"
+          <div 
+            className="flex flex-wrap justify-between sm:px-8 gap-4 sm:gap-6 md:gap-8 lg:gap-10 transition-opacity duration-500 mx-2 lg:mx-0 xl:mx-0"
             style={{
               opacity: showContent ? 1 : 0,
               transform: showContent ? "none" : "translateY(30px)",

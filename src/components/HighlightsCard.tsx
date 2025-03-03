@@ -37,7 +37,7 @@ const HighlightCard: React.FC<HighlightCardProps> = ({
 			initial={{ opacity: 0, y: 20 }}
 			animate={{ opacity: 1, y: 0 }}
 			transition={{ duration: 0.7 }}
-			className={`relative overflow-hidden rounded-lg bg-white shadow-lg transition-all duration-500 hover:shadow-2xl border-2 hover:border-blue-300 w-full h-full ${className}`}
+			className={`relative overflow-hidden rounded-lg bg-white shadow-lg transition-all duration-500 hover:shadow-2xl  w-full h-full ${className}`}
 			onMouseEnter={() => setIsHovered(true)}
 			onMouseLeave={() => setIsHovered(false)}
 		>

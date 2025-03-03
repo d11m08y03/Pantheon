@@ -5,7 +5,7 @@ export const Footer: React.FC = () => {
   return (
     <footer className="text-black py-12 mt-auto border-t-2 border-gray-200">
       <div className="container mx-auto text-center">
-        <TypingAnimation>Stay connected with us!</TypingAnimation>
+        <TypingAnimation className="text-2xl md:text-3xl lg:text-4xl xl:text-4xl">Stay connected with us!</TypingAnimation>
         <p className="text-lg mb-6">Follow us on social media or drop us a message!</p>
         
         
@@ -43,7 +43,7 @@ export const Footer: React.FC = () => {
         </div>
 
       
-        <p className="mt-8 text-sm text-white">
+        <p className="mt-8 text-sm text-black">
           &copy; {new Date().getFullYear()} UoM Computer Club. All rights reserved.
         </p>
       </div>

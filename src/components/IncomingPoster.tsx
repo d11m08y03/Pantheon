@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+import SubmissionForm from "./SubmissionForm"; 
 
 interface EventData {
   imageUrl: string;
@@ -12,52 +11,20 @@ interface EventData {
   description: string;
 }
 
-export default function IncomingPoster({
-  eventData,
-}: {
-  eventData: EventData;
-}) {
+export default function IncomingPoster({ eventData }: { eventData: EventData }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [teamName, setTeamName] = useState("");
-  const [members, setMembers] = useState("");
-  const [email, setEmail] = useState("");
-  const [proposal, setProposal] = useState<File | null>(null);
-  const [proposalText, setProposalText] = useState("");
-
-  const handleButtonClick = () => {
-    setIsOpen(!isOpen);
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const submissionData = {
-      teamName,
-      members: members.split(","),
-      email,
-      proposalText,
-      proposal,
-    };
-    console.log("Submitted Data:", submissionData);
-    alert("Submission Successful!");
-  };
-
-  const handleClose = () => {
-    setIsOpen(false);
-  };
 
   return (
     <>
       <motion.div
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
-        whileInView={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.5 }}
-        viewport={{ once: true, margin: "-100px" }}
-        className="relative overflow-hidden rounded-lg bg-white shadow-lg transition-shadow duration-300 hover:shadow-xl h-full w-full"
+        className="relative overflow-hidden rounded-lg bg-white shadow-lg transition-shadow duration-300 hover:shadow-xl w-full"
       >
-        <div className="flex w-full h-full">
+        <div className="flex flex-col md:flex-row w-full h-full">
           {/* Left Side: Image */}
-          <div className="w-1/2 aspect-[9/8] overflow-hidden">
+          <div className="w-full md:w-1/2 aspect-[9/8] overflow-hidden">
             <img
               src={eventData.imageUrl}
               alt={eventData.title}
@@ -65,99 +32,38 @@ export default function IncomingPoster({
             />
           </div>
 
-          {/* Right Side: Details */}
-          <div className="w-2/3 p-8 flex flex-col justify-between h-full">
+        
+          <div className="w-full md:w-1/2 p-6 md:p-8 flex flex-col justify-between h-full">
             <div>
-              <div className="mb-6 flex items-center justify-between">
-                <span className="rounded-full bg-neutral-100 px-4 py-2 text-lg font-medium text-neutral-600">
+              <div className="mb-4 md:mb-6 flex flex-col md:flex-row items-start md:items-center justify-between">
+                <span className="rounded-full bg-neutral-100 px-4 py-2 text-lg font-medium text-neutral-600 mb-2 md:mb-0">
                   {eventData.category}
                 </span>
-                <span className="text-lg text-neutral-500">
-                  {eventData.date}
-                </span>
+                <span className="text-lg text-neutral-500">{eventData.date}</span>
               </div>
 
-              <h3 className="mb-4 text-2xl font-semibold tracking-tight text-neutral-900">
+              <h3 className="mb-4 text-xl md:text-2xl font-semibold tracking-tight text-neutral-900">
                 {eventData.title}
               </h3>
 
-              <p className="text-lg text-neutral-600">
-                {eventData.description}
-              </p>
+              <p className="text-base md:text-lg text-neutral-600">{eventData.description}</p>
             </div>
 
-            <div className="mt-6 flex justify-center">
+            <div className="mt-4 md:mt-6 flex justify-center">
               <Button
-                className="w-full mt-5 hover:bg-blue-500 hover:text-white"
+                className="w-full md:w-2/3 lg:w-2/4 hover:bg-blue-500 hover:text-white"
                 variant="outline"
-                onClick={handleButtonClick}
+                onClick={() => setIsOpen(true)}
               >
                 Enroll for this event
               </Button>
             </div>
           </div>
         </div>
-
-        {isOpen && (
-          <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-white p-6 rounded-lg shadow-lg w-full sm:w-[400px]">
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <h2 className="text-xl font-bold mb-4">Hackathon Submission</h2>
-                <Input
-                  type="text"
-                  placeholder="Team Name"
-                  value={teamName}
-                  onChange={(e) => setTeamName(e.target.value)}
-                  required
-                />
-                <Input
-                  type="text"
-                  placeholder="Team Members (comma-separated)"
-                  value={members}
-                  onChange={(e) => setMembers(e.target.value)}
-                  required
-                />
-                <Input
-                  type="email"
-                  placeholder="Contact Email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
-                <Textarea
-                  placeholder="Additional details about the project proposal"
-                  value={proposalText}
-                  onChange={(e) => setProposalText(e.target.value)}
-                  required
-                  className="h-32"
-                />
-                <input
-                  type="file"
-                  accept=".pdf"
-                  onChange={(e) =>
-                    setProposal(e.target.files ? e.target.files[0] : null)
-                  }
-                  required
-                  className="w-full p-2 border border-gray-300 rounded-md"
-                />
-                <Button
-                  type="submit"
-                  className="w-full bg-blue-500 text-white hover:bg-blue-700"
-                >
-                  Submit Proposal
-                </Button>
-                <Button
-                  type="button"
-                  onClick={handleClose}
-                  className="w-full mt-2 p-2 bg-red-500 text-white rounded-md hover:bg-red-700"
-                >
-                  Close Form
-                </Button>
-              </form>
-            </div>
-          </div>
-        )}
       </motion.div>
+
+     
+      {isOpen && <SubmissionForm onClose={() => setIsOpen(false)} />}
     </>
   );
 }
