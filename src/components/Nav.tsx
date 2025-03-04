@@ -5,7 +5,7 @@ import { IoAddCircleOutline } from "react-icons/io5";
 import dummy from "../assets/dummy-logo.png";
 
 const isAdmin = false;
-const isLogged = true;
+const isLogged = false;
 
 const Nav = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -63,7 +63,7 @@ const Nav = () => {
                 className={({ isActive }) =>
                   `flex items-center space-x-2 px-3 py-2 rounded-md transition-all duration-300 ${
                     isActive
-                      ? "text-blue-600 border-b-2 border-blue-600"
+                      ? "text-blue-600  border-blue-600"
                       : "text-black hover:text-blue-600"
                   }`
                 }

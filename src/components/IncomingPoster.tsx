@@ -20,7 +20,7 @@ export default function IncomingPoster({ eventData }: { eventData: EventData }) 
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.5 }}
-        className="relative overflow-hidden rounded-lg bg-white shadow-lg transition-shadow duration-300 hover:shadow-xl w-full"
+        className="relative overflow-hidden rounded-lg  shadow-lg transition-shadow duration-300 hover:shadow-xl w-full bg-white"
       >
         <div className="flex flex-col md:flex-row w-full h-full">
           {/* Left Side: Image */}
