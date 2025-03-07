@@ -107,47 +107,47 @@ void Server::SetupRoutes() {
 
     // clang-format off
     #ifdef P_DEBUG
-		CROW_ROUTE(m_app, "/api/genesis")
-			.methods("POST"_method)([this](const crow::request& req) {
-				auto payload = crow::json::load(req.body);
-				if (!payload) {
-					return crow::response(
-						crow::status::BAD_REQUEST,
-						"Invalid JSON payload"
-					);
-				}
+			CROW_ROUTE(m_app, "/api/genesis")
+				.methods("POST"_method)([this](const crow::request& req) {
+					auto payload = crow::json::load(req.body);
+					if (!payload) {
+						return crow::response(
+							crow::status::BAD_REQUEST,
+							"Invalid JSON payload"
+						);
+					}
 
-				if (!payload.has("email") || !payload.has("password")
-					|| !payload.has("name")) {
-					return crow::response(
-						crow::status::BAD_REQUEST,
-						"Missing required field(s)"
-					);
-				}
+					if (!payload.has("email") || !payload.has("password")
+						|| !payload.has("name")) {
+						return crow::response(
+							crow::status::BAD_REQUEST,
+							"Missing required field(s)"
+						);
+					}
 
-				User user;
+					User user;
 
-				try {
-					user.m_name = payload["name"].s();
-					user.m_email = payload["email"].s();
-					user.m_password = payload["password"].s();
-				} catch (const std::exception& e) {
-					return crow::response(
-						crow::status::BAD_REQUEST,
-						e.what()
-					);
-				}
+					try {
+						user.m_name = payload["name"].s();
+						user.m_email = payload["email"].s();
+						user.m_password = payload["password"].s();
+					} catch (const std::exception& e) {
+						return crow::response(
+							crow::status::BAD_REQUEST,
+							e.what()
+						);
+					}
 
-				try {
-					m_db->CreateUser(user);
-				} catch (const std::exception& e) {
-					return crow::response(
-						crow::status::INTERNAL_SERVER_ERROR
-					);
-				}
+					try {
+						m_db->CreateUser(user);
+					} catch (const std::exception& e) {
+						return crow::response(
+							crow::status::INTERNAL_SERVER_ERROR
+						);
+					}
 
-				return crow::response(crow::status::CREATED, "User created");
-			});
+					return crow::response(crow::status::CREATED, "User created");
+				});
     #endif // P_DEBUG
     // clang-format on
 }
