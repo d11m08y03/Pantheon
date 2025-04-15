@@ -1,0 +1,9 @@
+-- Links TblEvent with TblOrganisor
+
+CREATE TABLE IF NOT EXISTS TblEventOrganisor (
+	ID INTEGER PRIMARY KEY AUTOINCREMENT,
+	EventID INTEGER NOT NULL,
+	OrganisorID INTEGER NOT NULL,
+	FOREIGN KEY(EventID) REFERENCES TblEvent(ID),
+	FOREIGN KEY(OrganisorID) REFERENCES TblOrganisor(ID)
+)
