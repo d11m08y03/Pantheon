@@ -2,4 +2,3 @@ build/
 .cache/
 *.db
 node_modules/
-tests/
