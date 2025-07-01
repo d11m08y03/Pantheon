@@ -1,0 +1,78 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/c++",
+      "-DASIO_STANDALONE",
+      "-DCROW_ENABLE_COMPRESSION",
+      "-DCROW_ENABLE_SSL",
+      "-I/home/zakariyya/Programming/pantheon/include",
+      "-I/home/zakariyya/Programming/pantheon/build/_deps/jwt-cpp-src/include",
+      "-I/home/zakariyya/Programming/pantheon/build/_deps/bcrypt-cpp-src/include",
+      "-std=gnu++17",
+      "-c",
+      "-o",
+      "CMakeFiles/pantheon.dir/src/handlers/user.cc.o",
+      "/home/zakariyya/Programming/pantheon/src/handlers/user.cc"
+    ],
+    "directory": "/home/zakariyya/Programming/pantheon/build",
+    "file": "/home/zakariyya/Programming/pantheon/src/handlers/user.cc",
+    "output": "/home/zakariyya/Programming/pantheon/build/CMakeFiles/pantheon.dir/src/handlers/user.cc.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/c++",
+      "-DASIO_STANDALONE",
+      "-DCROW_ENABLE_COMPRESSION",
+      "-DCROW_ENABLE_SSL",
+      "-I/home/zakariyya/Programming/pantheon/include",
+      "-I/home/zakariyya/Programming/pantheon/build/_deps/jwt-cpp-src/include",
+      "-I/home/zakariyya/Programming/pantheon/build/_deps/bcrypt-cpp-src/include",
+      "-std=gnu++17",
+      "-c",
+      "-o",
+      "CMakeFiles/pantheon.dir/src/main.cc.o",
+      "/home/zakariyya/Programming/pantheon/src/main.cc"
+    ],
+    "directory": "/home/zakariyya/Programming/pantheon/build",
+    "file": "/home/zakariyya/Programming/pantheon/src/main.cc",
+    "output": "/home/zakariyya/Programming/pantheon/build/CMakeFiles/pantheon.dir/src/main.cc.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/c++",
+      "-DASIO_STANDALONE",
+      "-DCROW_ENABLE_COMPRESSION",
+      "-DCROW_ENABLE_SSL",
+      "-I/home/zakariyya/Programming/pantheon/include",
+      "-I/home/zakariyya/Programming/pantheon/build/_deps/jwt-cpp-src/include",
+      "-I/home/zakariyya/Programming/pantheon/build/_deps/bcrypt-cpp-src/include",
+      "-std=gnu++17",
+      "-c",
+      "-o",
+      "CMakeFiles/pantheon.dir/src/repositories/user.cc.o",
+      "/home/zakariyya/Programming/pantheon/src/repositories/user.cc"
+    ],
+    "directory": "/home/zakariyya/Programming/pantheon/build",
+    "file": "/home/zakariyya/Programming/pantheon/src/repositories/user.cc",
+    "output": "/home/zakariyya/Programming/pantheon/build/CMakeFiles/pantheon.dir/src/repositories/user.cc.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/c++",
+      "-DASIO_STANDALONE",
+      "-DCROW_ENABLE_COMPRESSION",
+      "-DCROW_ENABLE_SSL",
+      "-I/home/zakariyya/Programming/pantheon/include",
+      "-I/home/zakariyya/Programming/pantheon/build/_deps/jwt-cpp-src/include",
+      "-I/home/zakariyya/Programming/pantheon/build/_deps/bcrypt-cpp-src/include",
+      "-std=gnu++17",
+      "-c",
+      "-o",
+      "CMakeFiles/pantheon.dir/src/server.cc.o",
+      "/home/zakariyya/Programming/pantheon/src/server.cc"
+    ],
+    "directory": "/home/zakariyya/Programming/pantheon/build",
+    "file": "/home/zakariyya/Programming/pantheon/src/server.cc",
+    "output": "/home/zakariyya/Programming/pantheon/build/CMakeFiles/pantheon.dir/src/server.cc.o"
+  }
+]

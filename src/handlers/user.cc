@@ -2,6 +2,7 @@
 
 #include <crow/common.h>
 #include <crow/json.h>
+#include <crow/logging.h>
 
 #include <exception>
 
@@ -52,7 +53,7 @@ crow::response UserHandler::genesis(
     const std::string& email,
     const std::string& password
 ) {
-	const std::string password_hash = bcrypt::generateHash(password);
+    const std::string password_hash = bcrypt::generateHash(password);
 
     Models::User user(name, email, password_hash);
     bool created = m_user_repo.create(user);
@@ -61,7 +62,7 @@ crow::response UserHandler::genesis(
         return BaseHandler::internal_err("Failed to create user");
     }
 
-    return crow::response(crow::status::CREATED, "User created");
+    return BaseHandler::created("User created");
 }
 
 void UserHandler::register_routes(App& app) {
@@ -72,51 +73,46 @@ void UserHandler::register_routes(App& app) {
         .methods(crow::HTTPMethod::POST)([this](const crow::request& req) {
             auto payload = crow::json::load(req.body);
 
-            if (!payload) {
-                return BaseHandler::bad_request_err("Invalid JSON payload");
+            std::unordered_map<std::string, std::string> required_fields = {
+                {"email", "string"},
+                {"password", "string"},
+            };
+
+            auto validation_resp = BaseHandler::validate_incoming_payload(
+                payload,
+                required_fields
+            );
+
+            if (!validation_resp.body.empty()) {
+                return validation_resp;
             }
 
-            if (!payload.has("email") || !payload.has("password")) {
-                return BaseHandler::bad_request_err(
-                    "Missing required fields email and/or password"
-                );
-            }
-
-            std::string email, password;
-
-            try {
-                email = payload["email"].s();
-                password = payload["password"].s();
-            } catch (const std::exception& e) {
-                return BaseHandler::bad_request_err("Invalid field types");
-            }
-
-            return this->login(email, password);
+            return this->login(payload["email"].s(), payload["password"].s());
         });
 
     app.route_dynamic(register_path)
         .methods(crow::HTTPMethod::POST)([this](const crow::request& req) {
             auto payload = crow::json::load(req.body);
 
-            if (!payload) {
-                return BaseHandler::bad_request_err("Invalid JSON payload");
+            std::unordered_map<std::string, std::string> required_fields = {
+                {"name", "string"},
+                {"email", "string"},
+                {"password", "string"},
+            };
+
+            auto validation_resp = BaseHandler::validate_incoming_payload(
+                payload,
+                required_fields
+            );
+
+            if (!validation_resp.body.empty()) {
+                return validation_resp;
             }
 
-            if (!payload.has("name") || !payload.has("email")
-                || !payload.has("password")) {
-                return BaseHandler::bad_request_err("Missing required fields");
-            }
-
-            std::string name, email, password;
-
-            try {
-                name = payload["name"].s();
-                email = payload["email"].s();
-                password = payload["password"].s();
-            } catch (const std::exception& e) {
-                return BaseHandler::bad_request_err("Invalid field types");
-            }
-
-            return this->genesis(name, email, password);
+            return this->genesis(
+                payload["name"].s(),
+                payload["email"].s(),
+                payload["password"].s()
+            );
         });
 }

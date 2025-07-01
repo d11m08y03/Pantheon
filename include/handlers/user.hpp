@@ -1,8 +1,7 @@
 #pragma once
 
-#include <repositories/user.hpp>
-
 #include "handlers/base.hpp"
+#include "repositories/user.hpp"
 
 class UserHandler: public BaseHandler {
   public:
