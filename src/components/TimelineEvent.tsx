@@ -12,7 +12,6 @@ interface TimelineEventProps {
 }
 
 const TimelineEvent: React.FC<TimelineEventProps> = ({ 
-  year, 
   title, 
   description, 
   isVisible, 

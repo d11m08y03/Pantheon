@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { CalendarCheck, Home, LogIn } from "lucide-react";
-import { IoAddCircleOutline } from "react-icons/io5";
 import dummy from "../assets/dummy-logo.png";
+import { IoBuild } from "react-icons/io5";
 
 const isAdmin = false;
 const isLogged = false;
@@ -17,15 +17,7 @@ const Nav = () => {
       label: "Past Events",
       icon: <CalendarCheck className="w-5 h-5" />,
     },
-    ...(isLogged && isAdmin
-      ? [
-          {
-            to: "/Admin",
-            label: "Add Event",
-            icon: <IoAddCircleOutline className="w-5 h-5" />,
-          },
-        ]
-      : []),
+  
     ...(!isLogged
       ? [
           {
@@ -35,6 +27,16 @@ const Nav = () => {
           },
         ]
       : []),
+      ...(isLogged && isAdmin
+        ? [
+            {
+              to: "/AdminPanel",
+              label: "Admin Panel",
+              icon: <IoBuild className="w-5 h-5" />,
+            },
+          ]
+        : []),
+
   ];
 
   return (

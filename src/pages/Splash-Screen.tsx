@@ -1,22 +1,12 @@
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import dummyLogo from "../assets/dummy-logo.png"; 
 
-const SplashScreen: React.FC = () => {
-  const [isVisible, setIsVisible] = useState(true);
-  const navigate = useNavigate(); 
+interface SplashScreenProps {
+  isLoading: boolean;
+}
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsVisible(false);
-      navigate("/home"); 
-    }, 3000); 
-
-    return () => clearTimeout(timer);
-  }, [navigate]);
-
-  if (!isVisible) return null;
+const SplashScreen: React.FC<SplashScreenProps> = ({ isLoading }) => {
+  if (!isLoading) return null;
 
   return (
     <motion.div
@@ -32,14 +22,11 @@ const SplashScreen: React.FC = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5, duration: 0.7 }}
       >
-       
         <img
           src={dummyLogo}
           alt="App Logo"
           className="h-32 w-32 object-contain animate-pulse"
         />
-
-     
         <h1 className="mt-4 text-xl sm:text-2xl font-semibold text-neutral-900">
           UoM Computer club
         </h1>
