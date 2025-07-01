@@ -4,8 +4,8 @@ import { CalendarCheck, Home, LogIn } from "lucide-react";
 import dummy from "../assets/dummy-logo.png";
 import { IoBuild } from "react-icons/io5";
 
-const isAdmin = false;
-const isLogged = false;
+const isAdmin = true;
+const isLogged = true;
 
 const Nav = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
