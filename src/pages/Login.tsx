@@ -6,6 +6,11 @@ import { InteractiveHoverButton } from '@/components/magicui/interactive-hover-b
 import { motion } from 'motion/react';
 import { Eye, EyeOff, Mail, Lock, Sparkles } from 'lucide-react';
 
+interface User {
+  email: string;
+  password: string;
+}
+
 const LoginForm: React.FC = () => {
   const [mode, setMode] = useState<'login' | 'signup'>('login');
   const [email, setEmail] = useState('');
@@ -19,17 +24,27 @@ const LoginForm: React.FC = () => {
   const [showSignupConfirm, setShowSignupConfirm] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
+  // Simulated user database (localStorage)
+  const getUsers = (): User[] => JSON.parse(localStorage.getItem('users') || '[]');
+  const setUsers = (users: User[]) => localStorage.setItem('users', JSON.stringify(users));
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
     setIsLoading(true);
     
-    // Simulate loading
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    // Add login logic here
-    console.log('Login attempt with:', { email, password });
+    await new Promise(resolve => setTimeout(resolve, 700));
+    const users = getUsers();
+    const user = users.find((u) => u.email === email);
+    if (!user || user.password !== password) {
+      setError('Invalid email or password');
+      setIsLoading(false);
+      return;
+    }
+    localStorage.setItem('currentUser', JSON.stringify(user));
     setIsLoading(false);
+    // Simulate redirect or success
+    window.location.href = '/';
   };
 
   const handleSignUp = async (e: React.FormEvent) => {
@@ -47,13 +62,20 @@ const LoginForm: React.FC = () => {
     }
     
     setIsLoading(true);
-    
-    // Simulate loading
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    // Add sign up logic here
-    console.log('Sign Up attempt with:', { signupEmail, signupPassword });
+    await new Promise(resolve => setTimeout(resolve, 700));
+    const users = getUsers();
+    if (users.find((u) => u.email === signupEmail)) {
+      setError('Email already registered');
+      setIsLoading(false);
+      return;
+    }
+    const newUser: User = { email: signupEmail, password: signupPassword };
+    users.push(newUser);
+    setUsers(users);
+    localStorage.setItem('currentUser', JSON.stringify(newUser));
     setIsLoading(false);
+    // Simulate redirect or success
+    window.location.href = '/';
   };
 
   const validateEmail = (email: string) => {
@@ -484,26 +506,26 @@ const LoginForm: React.FC = () => {
               </div>
               
               <motion.div 
-                className="space-y-3"
+                className="space-y-4"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.8, delay: 1 }}
               >
-                <div className="flex items-center gap-3 text-gray-300">
-                  <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
-                  <span className="text-sm">Access exclusive tech events</span>
+                <div className="flex items-center gap-3">
+                  <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-blue-500/10 text-blue-500 text-lg"><span>🔧</span></span>
+                  <span className="text-base text-white/90 font-medium">Tech Events</span>
                 </div>
-                <div className="flex items-center gap-3 text-gray-300">
-                  <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
-                  <span className="text-sm">Connect with professionals</span>
+                <div className="flex items-center gap-3">
+                  <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-blue-500/10 text-blue-500 text-lg"><span>🤝</span></span>
+                  <span className="text-base text-white/90 font-medium">Networking</span>
                 </div>
-                <div className="flex items-center gap-3 text-gray-300">
-                  <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
-                  <span className="text-sm">Showcase your projects</span>
+                <div className="flex items-center gap-3">
+                  <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-blue-500/10 text-blue-500 text-lg"><span>🚀</span></span>
+                  <span className="text-base text-white/90 font-medium">Build & Compete</span>
                 </div>
-                <div className="flex items-center gap-3 text-gray-300">
-                  <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
-                  <span className="text-sm">Stay updated with trends</span>
+                <div className="flex items-center gap-3">
+                  <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-blue-500/10 text-blue-500 text-lg"><span>🌐</span></span>
+                  <span className="text-base text-white/90 font-medium">Latest Tech</span>
                 </div>
               </motion.div>
             </motion.div>

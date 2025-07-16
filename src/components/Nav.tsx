@@ -7,9 +7,9 @@ import { IoBuild } from "react-icons/io5";
 import { useEffect } from "react";
 import { Moon, Sun } from "lucide-react";
 
-const isAdmin = true;
+const isAdmin = false;
 const isLecturer = true;
-const isLogged = false;
+const isLogged = true;
 
 const Nav = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -75,6 +75,14 @@ const Nav = () => {
           },
         ]
       : []),
+    // Sign Out: only if logged in
+    ...(isLogged ? [{
+      to: "#signout",
+      label: "SIGN OUT",
+      icon: <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H7a2 2 0 01-2-2V7a2 2 0 012-2h4a2 2 0 012 2v1" /></svg>,
+      description: "Sign out of your account",
+      signOut: true
+    }] : [])
   ];
 
   return (
@@ -96,28 +104,40 @@ const Nav = () => {
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center space-x-1">
             {navItems.map((item) => (
-              <NavLink
-                key={item.to}
-                to={item.to}
-                className={({ isActive }) =>
-                  `flex items-center space-x-2 px-4 py-2 rounded-xl transition-all duration-200 relative group ${
-                    isActive
-                      ? "text-black dark:text-white active nav-active"
-                      : "text-gray-700 dark:text-gray-200 hover:bg-black dark:hover:bg-white hover:text-white dark:hover:text-black"
-                  }`
-                }
-                title={item.description}
-              >
-                {({ isActive }) => (
-                  <>
-                    {item.icon}
-                    <span className="text-sm font-medium">{item.label}</span>
-                    {isActive && (
-                      <div className="absolute bottom-0 left-4 right-4 h-0.5 bg-black dark:bg-white rounded-full"></div>
-                    )}
-                  </>
-                )}
-              </NavLink>
+              item.signOut ? (
+                <button
+                  key="signout"
+                  onClick={() => { localStorage.clear(); window.location.reload(); }}
+                  className="flex items-center space-x-2 px-4 py-2 rounded-xl transition-all duration-200 relative group text-gray-700 dark:text-gray-200 hover:bg-black dark:hover:bg-white hover:text-white dark:hover:text-black font-semibold"
+                  title={item.description}
+                >
+                  {item.icon}
+                  <span className="text-sm font-medium">{item.label}</span>
+                </button>
+              ) : (
+                <NavLink
+                  key={item.to}
+                  to={item.to}
+                  className={({ isActive }) =>
+                    `flex items-center space-x-2 px-4 py-2 rounded-xl transition-all duration-200 relative group ${
+                      isActive
+                        ? "text-black dark:text-white active nav-active"
+                        : "text-gray-700 dark:text-gray-200 hover:bg-black dark:hover:bg-white hover:text-white dark:hover:text-black"
+                    }`
+                  }
+                  title={item.description}
+                >
+                  {({ isActive }) => (
+                    <>
+                      {item.icon}
+                      <span className="text-sm font-medium">{item.label}</span>
+                      {isActive && (
+                        <div className="absolute bottom-0 left-4 right-4 h-0.5 bg-black dark:bg-white rounded-full"></div>
+                      )}
+                    </>
+                  )}
+                </NavLink>
+              )
             ))}
             {/* Dark mode toggle button */}
             <button
