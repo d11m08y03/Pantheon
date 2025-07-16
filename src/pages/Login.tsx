@@ -399,12 +399,7 @@ const LoginForm: React.FC = () => {
                 </motion.div>
 
                 <div className="mt-4 pt-3 border-t border-gray-100 dark:border-gray-700">
-                  <p className="text-xs text-gray-500 dark:text-gray-400 text-center">
-                    By continuing, you agree to our{' '}
-                    <a href="#" className="text-blue-600 dark:text-blue-400 hover:underline">Terms</a>
-                    {' '}and{' '}
-                    <a href="#" className="text-blue-600 dark:text-blue-400 hover:underline">Privacy Policy</a>
-                  </p>
+             
                 </div>
               </MagicCard>
             </motion.div>
