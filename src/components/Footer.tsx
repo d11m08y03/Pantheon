@@ -41,8 +41,8 @@ export const Footer: React.FC = () => {
               </div>
               <div className="flex items-center justify-center md:justify-start gap-2">
                 <IoMailOutline className="text-gray-500 dark:text-gray-400" />
-                <a href="mailto:official@uomcomputerclub.tech" className="hover:text-black dark:hover:text-white transition-colors">
-                  official@uomcomputerclub.tech
+                <a href="mailto:uomcomputerclub25@gmail.com" className="hover:text-black dark:hover:text-white transition-colors">
+                uomcomputerclub25@gmail.com
                 </a>
               </div>
             </div>
