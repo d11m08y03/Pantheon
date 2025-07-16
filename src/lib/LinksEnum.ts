@@ -4,4 +4,5 @@ export enum LinksEnum {
   LOGIN = "/Login",
   UPCOMING_EVENTS = "/UpcomingEvents",
   ADMINPANEL = '/AdminPanel',
+  LECTURER = '/lecturer',
 }

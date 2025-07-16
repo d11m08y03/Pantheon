@@ -8,6 +8,7 @@ import SplashScreen from "./pages/Splash-Screen";
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
 import AdminPanel from "./components/AdminPanel";
+import Submissions from "./pages/lecturer";
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
 
@@ -26,6 +27,7 @@ const App = () => {
         <Routes>
           <Route path={LinksEnum.HOME} element={<Home />} />
           <Route path={LinksEnum.PAST_EVENTS} element={<PastEvents />} />
+          <Route path={LinksEnum.LECTURER} element={<Submissions />} />
           <Route path={LinksEnum.LOGIN} element={<Login />} />
           <Route path={LinksEnum.ADMINPANEL} element={<AdminPanel />} />
           <Route path="*" element={<Home />} /> {/* Fallback route */}

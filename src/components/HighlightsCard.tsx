@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { ChevronLeft, ChevronRight, X } from "lucide-react";
+import { ChevronLeft, ChevronRight, Calendar, Tag } from "lucide-react";
 
 interface EventData {
 	imageUrls: string[];
@@ -17,8 +17,6 @@ interface HighlightCardProps {
 
 const HighlightCard: React.FC<HighlightCardProps> = ({ eventData, className }) => {
 	const [currentIndex, setCurrentIndex] = useState(0);
-	const [isModalOpen, setIsModalOpen] = useState(false);
-	const [_, setIsHovered] = useState(false);
 
 	const nextImage = () => {
 		setCurrentIndex((prev) => (prev + 1) % eventData.imageUrls.length);
@@ -30,95 +28,84 @@ const HighlightCard: React.FC<HighlightCardProps> = ({ eventData, className }) =
 		);
 	};
 
-	const openModal = () => {
-		setIsModalOpen(true);
-	};
-
-	const closeModal = () => {
-		setIsModalOpen(false);
-	};
-
 	return (
 		<>
 			<motion.div
 				initial={{ opacity: 0, y: 20 }}
 				animate={{ opacity: 1, y: 0 }}
-				transition={{ duration: 0.7 }}
-				className={`relative overflow-hidden rounded-lg shadow-lg transition-all duration-500 hover:shadow-2xl w-full h-full ${className} bg-white`}
-				onMouseEnter={() => setIsHovered(true)}
-				onMouseLeave={() => setIsHovered(false)}
+				transition={{ duration: 0.4 }}
+				className={`group relative overflow-hidden rounded-xl bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 w-full h-full hover:shadow-md transition-shadow duration-300 mt-8 magicui-interactive-hover ${className}`}
 			>
+
+				
 				{/* Image Carousel */}
 				<div className="relative aspect-[16/9] overflow-hidden w-full h-2/5">
-					<motion.img
-						key={eventData.imageUrls[currentIndex]}
+					<img
 						src={eventData.imageUrls[currentIndex]}
-						alt={eventData.title}
-						className="h-full w-full object-cover transition-transform duration-700 cursor-pointer"
-						initial={{ opacity: 0 }}
-						animate={{ opacity: 1 }}
-						exit={{ opacity: 0 }}
-						onClick={openModal} // Open modal on click
+						alt={`${eventData.title} - Image ${currentIndex + 1}`}
+						className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
 					/>
+
+					{/* Removed full image view button */}
 
 					{/* Navigation Arrows */}
 					{eventData.imageUrls.length > 1 && (
 						<>
 							<button
 								onClick={prevImage}
-								className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full shadow-md hover:bg-gray-700 transition"
+								className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white/90 dark:bg-gray-900/90 text-gray-800 dark:text-gray-200 p-2 rounded-full shadow-md hover:bg-white dark:hover:bg-gray-800 transition-colors duration-200 opacity-0 group-hover:opacity-100"
+								aria-label="Previous image"
 							>
-								<ChevronLeft size={24} />
+								<ChevronLeft size={18} />
 							</button>
 							<button
 								onClick={nextImage}
-								className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full shadow-md hover:bg-gray-700 transition"
+								className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white/90 dark:bg-gray-900/90 text-gray-800 dark:text-gray-200 p-2 rounded-full shadow-md hover:bg-white dark:hover:bg-gray-800 transition-colors duration-200 opacity-0 group-hover:opacity-100"
+								aria-label="Next image"
 							>
-								<ChevronRight size={24} />
+								<ChevronRight size={18} />
 							</button>
 						</>
+					)}
+
+					{/* Image Counter */}
+					{eventData.imageUrls.length > 1 && (
+						<div className="absolute bottom-2 right-2 bg-black/60 dark:bg-white/60 text-white dark:text-black px-2 py-1 rounded-full text-xs font-medium">
+							{currentIndex + 1} / {eventData.imageUrls.length}
+						</div>
 					)}
 				</div>
 
 				{/* Content Section */}
-				<div className="p-6 flex flex-col justify-between h-[60%] overflow-hidden">
-					<div className="mb-4 flex items-center justify-between">
-						<span className="truncate max-w-[120px] rounded-full bg-neutral-100 px-3 py-1 text-xs sm:text-sm font-medium text-neutral-600">
-							{eventData.category}
-						</span>
-						<span className="text-xs sm:text-sm text-neutral-500">
-							{eventData.date}
-						</span>
+				<div className="p-8 flex flex-col justify-between h-[60%] gap-8">
+					<div className="mb-3 flex items-center justify-between">
+						<div className="flex items-center gap-2 bg-gray-100 dark:bg-gray-800 rounded-full px-3 py-1">
+							<Tag size={14} className="text-gray-600 dark:text-gray-300" />
+							<span className="text-xs font-medium text-gray-700 dark:text-gray-200 truncate max-w-[100px]">
+								{eventData.category}
+							</span>
+						</div>
+						<div className="flex items-center gap-1.5 text-gray-500 dark:text-gray-400">
+							<Calendar size={14} />
+							<span className="text-xs font-medium">
+								{eventData.date}
+							</span>
+						</div>
 					</div>
 
-					<h3 className="mb-3 text-lg sm:text-xl font-semibold tracking-tight text-neutral-900">
+					<h3 className="mb-2 text-lg font-bold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-200">
 						{eventData.title}
 					</h3>
 
-					<p className="text-neutral-600 text-sm sm:text-base line-clamp-3">
+					<p className="text-gray-600 dark:text-gray-300 text-sm line-clamp-3 leading-relaxed">
 						{eventData.description}
 					</p>
+
+					{/* Removed click to view hint */}
 				</div>
 			</motion.div>
 
-			{/* Modal */}
-			{isModalOpen && (
-				<div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50">
-					<div className="relative max-w-3xl w-full">
-						<button
-							className="absolute top-4 right-4 bg-gray-800 text-white p-2 rounded-full shadow-md hover:bg-gray-700 transition"
-							onClick={closeModal}
-						>
-							<X size={24} />
-						</button>
-						<img
-							src={eventData.imageUrls[currentIndex]}
-							alt={eventData.title}
-							className="w-full max-h-[80vh] object-contain rounded-lg"
-						/>
-					</div>
-				</div>
-			)}
+			{/* Removed modal for full image view */}
 		</>
 	);
 };

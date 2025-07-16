@@ -46,7 +46,7 @@ export const BinaryBackground: React.FC<BinaryBackgroundProps> = ({ className })
       {binaryDigits.map((digit) => (
         <span
           key={digit.id}
-          className="binaryDigit"
+          className="binaryDigit text-black dark:text-white"
           style={{
             left: digit.left,
             animation: "fall 5s linear",

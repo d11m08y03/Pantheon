@@ -22,7 +22,7 @@ const Timeline: React.FC = () => {
   return (
     <>
       <Nav />
-      <h1 className="text-3xl md:text-5xl font-semibold text-center text-gray-900 dark:text-gray-100 mb-6 mt-20 px-4">
+      <h1 className="text-3xl md:text-5xl font-semibold text-center text-gray-900 dark:text-gray-100 mb-6 mt-32 px-4">
         <SparklesText className="text-4xl" text="A Journey Through Time: The Story of Our Club's Achievements" />
       </h1>
 

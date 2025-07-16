@@ -1,86 +1,140 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { CalendarCheck, Home, LogIn } from "lucide-react";
-import dummy from "../assets/dummy-logo.png";
+import { CalendarCheck, Home, LogIn, FileText } from "lucide-react";
+import CClogo from "../assets/CC-logo.png";
+import CCLogoWhite from "../assets/CCLogoWhite.png";
 import { IoBuild } from "react-icons/io5";
+import { useEffect } from "react";
+import { Moon, Sun } from "lucide-react";
 
 const isAdmin = true;
-const isLogged = true;
+const isLecturer = true;
+const isLogged = false;
 
 const Nav = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isDark, setIsDark] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const stored = localStorage.getItem('theme');
+      if (stored === 'dark') return true;
+      if (stored === 'light') return false;
+      // fallback to system
+      return window.matchMedia('(prefers-color-scheme: dark)').matches;
+    }
+    return false;
+  });
+
+  useEffect(() => {
+    if (isDark) {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem('theme', 'light');
+    }
+  }, [isDark]);
 
   const navItems = [
-    { to: "/", label: "Home", icon: <Home className="w-5 h-5" /> },
+    { to: "/", label: "HOME", icon: <Home className="w-5 h-5" />, description: "Main page" },
     {
       to: "/PastEvents",
-      label: "Past Events",
+      label: "PAST EVENTS",
       icon: <CalendarCheck className="w-5 h-5" />,
+      description: "View our previous events"
     },
-  
+    // Submissions: only if logged in and (admin or lecturer)
+    ...((isLogged && (isAdmin || isLecturer))
+      ? [
+          {
+            to: "/lecturer",
+            label: "SUBMISSIONS",
+            icon: <FileText className="w-5 h-5" />,
+            description: "Review event submissions"
+          },
+        ]
+      : []),
+    // Log in: only if not logged in
     ...(!isLogged
       ? [
           {
             to: "/Login",
-            label: "Log in",
+            label: "LOG IN",
             icon: <LogIn className="w-5 h-5" />,
+            description: "Access your account"
           },
         ]
       : []),
-      ...(isLogged && isAdmin
-        ? [
-            {
-              to: "/AdminPanel",
-              label: "Admin Panel",
-              icon: <IoBuild className="w-5 h-5" />,
-            },
-          ]
-        : []),
-
+    // Admin Panel: only if logged in and admin
+    ...((isLogged && isAdmin)
+      ? [
+          {
+            to: "/AdminPanel",
+            label: "ADMIN PANEL",
+            icon: <IoBuild className="w-5 h-5" />,
+            description: "Manage the website"
+          },
+        ]
+      : []),
   ];
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-lg border-b border-gray-200">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 dark:bg-gray-950 backdrop-blur-lg border-b border-gray-200 dark:border-gray-800 shadow-sm">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo & Club Name */}
           <div className="flex items-center space-x-3">
-            <NavLink to="/">
-              <img className="h-8 w-8" src={dummy} alt="Logo" />
-            </NavLink>
-            <NavLink
-              to="/"
-              className="font-bold text-lg text-black hover:text-blue-600 hover:underline"
-            >
-              UoM Computer Club
+            <NavLink to="/" className="flex items-center space-x-3 hover:opacity-80 transition-opacity">
+              <img className="h-8 w-8" src={isDark ? CCLogoWhite : CClogo} alt="UoM Computer Club Logo" />
+              <div>
+                <div className="font-bold text-lg text-gray-900 dark:text-white font-questrial">
+              UOM COMPUTER CLUB
+                </div>
+              </div>
             </NavLink>
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-6">
+          <div className="hidden lg:flex items-center space-x-1">
             {navItems.map((item) => (
               <NavLink
                 key={item.to}
                 to={item.to}
                 className={({ isActive }) =>
-                  `flex items-center space-x-2 px-3 py-2 rounded-md transition-all duration-300 ${
+                  `flex items-center space-x-2 px-4 py-2 rounded-xl transition-all duration-200 relative group ${
                     isActive
-                      ? "text-blue-600  border-blue-600"
-                      : "text-black hover:text-blue-600"
+                      ? "text-black dark:text-white active nav-active"
+                      : "text-gray-700 dark:text-gray-200 hover:bg-black dark:hover:bg-white hover:text-white dark:hover:text-black"
                   }`
                 }
+                title={item.description}
               >
-                {item.icon}
-                <span className="text-sm font-medium">{item.label}</span>
+                {({ isActive }) => (
+                  <>
+                    {item.icon}
+                    <span className="text-sm font-medium">{item.label}</span>
+                    {isActive && (
+                      <div className="absolute bottom-0 left-4 right-4 h-0.5 bg-black dark:bg-white rounded-full"></div>
+                    )}
+                  </>
+                )}
               </NavLink>
             ))}
+            {/* Dark mode toggle button */}
+            <button
+              onClick={() => setIsDark((d) => !d)}
+              className="ml-4 p-2 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+              title={isDark ? "Switch to light mode" : "Switch to dark mode"}
+            >
+              {isDark ? <Sun size={18} /> : <Moon size={18} />}
+            </button>
           </div>
 
           {/* Mobile Menu Button */}
           <div className="lg:hidden flex items-center">
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="text-black"
+              className="text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+              aria-label="Toggle mobile menu"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -103,27 +157,44 @@ const Nav = () => {
 
       {/* Mobile Navigation */}
       {isMobileMenuOpen && (
-        <div className="lg:hidden bg-white border-t border-gray-200">
-          <div className="flex flex-col items-center py-4 space-y-2">
+        <div className="lg:hidden bg-white dark:bg-gray-950 border-t border-gray-200 dark:border-gray-800 shadow-lg">
+          <div className="flex flex-col py-4">
             {navItems.map((item) => (
               <NavLink
                 key={item.to}
                 to={item.to}
                 className={({ isActive }) =>
-                  `flex items-center space-x-2 px-4 py-3 rounded-md w-full text-center transition-all duration-300 ${
+                  `flex items-center space-x-3 px-6 py-4 transition-all duration-200 relative ${
                     isActive
-                      ? "text-blue-600 bg-gray-100 border-l-4 border-blue-600"
-                      : "text-black hover:bg-gray-200"
+                      ? "text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-gray-900 border-r-4 border-blue-600 dark:border-blue-400"
+                      : "text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-800"
                   }`
                 }
+                onClick={() => setIsMobileMenuOpen(false)}
+                title={item.description}
               >
-                {item.icon}
-                <span className="text-sm font-medium">{item.label}</span>
+                {({ isActive }) => (
+                  <>
+                    <div className={`p-2 rounded-lg ${isActive ? 'bg-blue-100 dark:bg-gray-800' : 'bg-gray-100 dark:bg-gray-900'}`}>
+                    {item.icon}
+                    </div>
+                    <div className="flex flex-col">
+                    <span className="text-sm font-medium">{item.label}</span>
+                      <span className="text-xs text-gray-500 dark:text-gray-400">{item.description}</span>
+                    </div>
+                  </>
+                )}
               </NavLink>
             ))}
           </div>
         </div>
       )}
+      {/* Custom style to force active nav text to stay white in dark mode on hover */}
+      <style>{`
+        .dark .nav-active:hover, .dark .nav-active:focus {
+          color: #fff !important;
+        }
+      `}</style>
     </nav>
   );
 };
