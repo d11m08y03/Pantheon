@@ -73,7 +73,7 @@ export const Footer: React.FC = () => {
             <IoLogoFacebook />
           </a>
           <a
-            href="mailto:official@uomcomputerclub.tech"
+            href="mailto:uomcomputerclub25@gmail.com"
             className="text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors duration-300 text-2xl p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800"
             title="Send us an email"
           >
