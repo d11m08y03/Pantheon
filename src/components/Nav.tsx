@@ -180,32 +180,53 @@ const Nav = () => {
         <div className="lg:hidden bg-white dark:bg-gray-950 border-t border-gray-200 dark:border-gray-800 shadow-lg">
           <div className="flex flex-col py-4">
             {navItems.map((item) => (
-              <NavLink
-                key={item.to}
-                to={item.to}
-                className={({ isActive }) =>
-                  `flex items-center space-x-3 px-6 py-4 transition-all duration-200 relative ${
-                    isActive
-                      ? "text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-gray-900 border-r-4 border-blue-600 dark:border-blue-400"
-                      : "text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-800"
-                  }`
-                }
-                onClick={() => setIsMobileMenuOpen(false)}
-                title={item.description}
-              >
-                {({ isActive }) => (
-                  <>
-                    <div className={`p-2 rounded-lg ${isActive ? 'bg-blue-100 dark:bg-gray-800' : 'bg-gray-100 dark:bg-gray-900'}`}>
-                    {item.icon}
-                    </div>
-                    <div className="flex flex-col">
-                    <span className="text-sm font-medium">{item.label}</span>
-                      <span className="text-xs text-gray-500 dark:text-gray-400">{item.description}</span>
-                    </div>
-                  </>
-                )}
-              </NavLink>
+              item.signOut ? (
+                <button
+                  key="signout"
+                  onClick={() => { localStorage.clear(); window.location.reload(); }}
+                  className="flex items-center space-x-3 px-6 py-4 transition-all duration-200 relative text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-800 font-semibold"
+                  title={item.description}
+                >
+                  {item.icon}
+                  <span className="text-sm font-medium">{item.label}</span>
+                </button>
+              ) : (
+                <NavLink
+                  key={item.to}
+                  to={item.to}
+                  className={({ isActive }) =>
+                    `flex items-center space-x-3 px-6 py-4 transition-all duration-200 relative ${
+                      isActive
+                        ? "text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-gray-900 border-r-4 border-blue-600 dark:border-blue-400"
+                        : "text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-800"
+                    }`
+                  }
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  title={item.description}
+                >
+                  {({ isActive }) => (
+                    <>
+                      <div className={`p-2 rounded-lg ${isActive ? 'bg-blue-100 dark:bg-gray-800' : 'bg-gray-100 dark:bg-gray-900'}`}>
+                        {item.icon}
+                      </div>
+                      <div className="flex flex-col">
+                        <span className="text-sm font-medium">{item.label}</span>
+                        <span className="text-xs text-gray-500 dark:text-gray-400">{item.description}</span>
+                      </div>
+                    </>
+                  )}
+                </NavLink>
+              )
             ))}
+            {/* Dark mode toggle button for mobile */}
+            <button
+              onClick={() => setIsDark((d) => !d)}
+              className="mt-2 mx-6 p-2 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors flex items-center gap-2"
+              title={isDark ? "Switch to light mode" : "Switch to dark mode"}
+            >
+              {isDark ? <Sun size={18} /> : <Moon size={18} />}
+              <span className="text-sm font-medium">{isDark ? 'Light Mode' : 'Dark Mode'}</span>
+            </button>
           </div>
         </div>
       )}
